@@ -6,5 +6,3 @@ C++FLAGS = "-g" ;
 Main usplash-text : usplash-text.cpp usplash.cpp ;
 
 LinkLibraries usplash-text : utils ;
-
-SubInclude TOP shared ;
