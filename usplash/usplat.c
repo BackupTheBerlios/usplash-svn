@@ -25,13 +25,12 @@ int open_fb() {
 	return -1;
 }
 
-void openvt() {
+void open_vt() {
 	/* Open a New VT */
 	long res;
 	int fp = open_tty();
 	if ( fp < 0 ) {
-		fprintf( stderr , "Can't open /dev/tty0: " );
-		perror( "" );
+		fprintf( stderr , "Can't open tty\n" );
 		exit( 1 );
 	}
 	ioctl( fp , VT_OPENQRY ,  &res );
@@ -39,13 +38,13 @@ void openvt() {
 	ioctl( fp , VT_WAITACTIVE , res );
 	close( fp );
 
-	/* Makes the cursor invisible */
 	fp = open_fb();
 	if ( fp < 0 ) {
-		fprintf( stderr , "Can't open /dev/fb0: " );
-		perror( "" );
+		fprintf( stderr , "Can't open fb\n" );
 		exit( 1 );
 	}
+	/* Makes the cursor invisible */
+	/* TODO: Fix this a better way */
 	ioctl( fp , FBIOBLANK );
 	close( fp );
 }
@@ -56,8 +55,7 @@ struct fb_var_screeninfo *get_vscreeninfo() {
 	
 	fp = open_fb();
 	if ( fp < 0 ) {
-		fprintf( stderr , "Can't open /dev/fb0: " );
-		perror( "" );
+		fprintf( stderr , "Can't open fb\n" );
 		exit( 1 );
 	}
 	ioctl( fp , FBIOGET_VSCREENINFO , fbvinf );
@@ -149,17 +147,17 @@ int main( int argc , char *argv[] ) {
 		printf("Usage: usplat <directory>\n");
 		exit(1);
 	}
-	int fp;
+	int fd;
 	Image *img;
 	char *fn;
 	fn = get_best_filename( argv[1] );
-	openvt();
+	open_vt();
 	img = pcx_loader( fn );
 	convert( img );
 
-	fp = open_fb();
-	write( fp , img->data , img->w*img->h*(img->bpp/8) );
-	close( fp );
+	fd = open_fb();
+	write( fd , img->data , img->w*img->h*(img->bpp/8) );
+	close( fd );
 
 	return 0;
 }
