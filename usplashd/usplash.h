@@ -9,7 +9,7 @@ class Usplash {
 		
 		virtual void init();
 		virtual void quit();
-		virtual void set_text( std::string );
+		virtual void set_text( char * );
 		virtual void set_progress( float );
 
 
@@ -18,10 +18,8 @@ class Usplash {
 		void stop();
 		void waitfor();
 
-	protected:
+	private:
 		bool running;
-		std::string text;
-		float progress;
 };
 
 #endif

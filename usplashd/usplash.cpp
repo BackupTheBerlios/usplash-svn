@@ -7,13 +7,11 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-
 Usplash::Usplash() {
-	progress = 0;
-	text = "";
 }
 
 void Usplash::run() {
+	running = true;
 	int fd,con;
 	struct sockaddr_un local,remote;
 	int len;
@@ -41,11 +39,13 @@ void Usplash::run() {
 	len = sizeof( struct sockaddr_un );
 	
 	while( running ) {
+		/* Shoud maybe use select here, so that we can timeout */
 		if ( ( con = accept( fd , (struct sockaddr *)&remote , (socklen_t*)&len ) ) == -1 ) {
 			perror( "accept" );
 			return;
 		}
 
+		/* Retriev message */
 		Message *msg = (Message*)malloc( sizeof( Message ) );
 		recv( con , msg , sizeof( Message ) , 0  );
 		if( msg->size > 0 ) {
@@ -53,11 +53,15 @@ void Usplash::run() {
 			recv( con , msg+sizeof( Message ) , msg->size , 0 );
 		}
 
+		/* Parse message */
 		if( msg->cmd == MSG_EXIT ) {
 			running = false;
+		} else if ( msg->cmd == MSG_TEXT ) {
+			set_text( (char*)(msg+sizeof(Message)) );
 		}
 		
 		close( con );
+		free( msg );
 	}
 
 	close( fd );
@@ -74,7 +78,7 @@ void Usplash::init() {
 void Usplash::quit() {
 }
 
-void Usplash::set_text( std::string ntext ) {
+void Usplash::set_text( char *ntext ) {
 }
 
 void Usplash::set_progress( float p ) {

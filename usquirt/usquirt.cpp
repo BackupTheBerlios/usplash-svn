@@ -1,12 +1,14 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <iostream>
+
+using namespace std;
 
 #include "message.h"
 #include "utils.h"
 
-int main( int argc , char *argv ) {
-
+void send_message( Message *msg ) {
 	int s , len;
 	sockaddr_un remote;
 
@@ -24,15 +26,43 @@ int main( int argc , char *argv ) {
 		exit( 1 );
 	}
 
-	Message *msg = (Message*)malloc( sizeof( Message ) );
-	msg->cmd = MSG_EXIT;
-	msg->size = 0;
-
 	if ( send(s, (void*)msg, sizeof(Message)+msg->size , 0 ) == -1 ) {
 		perror( "send" );
 		exit(1);
 	}
 	close( s );
+}
+
+void print_help() {
+	/* TODO: Print helpful use message here */
+}
+	
+
+int main( int argc , char **argv ) {
+	Message *msg = (Message*)malloc( sizeof( Message ) );
+	msg->size = 0;
+
+	/* Just checking */
+	if ( argc < 2 ) {
+		print_help(); exit(1);
+	}
+
+	if ( !strcmp( argv[1] , "exit" ) ) {
+		msg->cmd = MSG_EXIT;
+	} else if ( !strcmp( argv[1] , "text" ) ) {
+		if ( argc < 3 ) {
+			print_help(); exit(1);
+		}
+		msg->cmd = MSG_TEXT;
+		msg = ( Message *)realloc( msg , sizeof( Message ) +  strlen( argv[2] ) + 1 );
+		msg->size = strlen( argv[2] );
+		strcpy((char*) msg+sizeof(Message) , argv[2] );
+
+	} else {
+		print_help(); exit(1);
+	}
+
+	send_message( msg );
 
 	return 0;
 }
