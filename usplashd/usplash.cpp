@@ -58,6 +58,8 @@ void Usplash::run() {
 			running = false;
 		} else if ( msg->cmd == MSG_TEXT ) {
 			set_text( (char*)(msg+sizeof(Message)) );
+		} else if ( msg->cmd == MSG_PROGRESS ) {
+			set_progress( *((int*)(msg+sizeof(Message))) );
 		}
 		
 		close( con );
@@ -81,5 +83,5 @@ void Usplash::quit() {
 void Usplash::set_text( char *ntext ) {
 }
 
-void Usplash::set_progress( float p ) {
+void Usplash::set_progress( int p ) {
 }

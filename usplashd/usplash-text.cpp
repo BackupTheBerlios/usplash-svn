@@ -11,7 +11,7 @@ using namespace std;
 class UsplashText : public Usplash {
 	public:
 		virtual void set_text( char *);
-		virtual void set_progress( float p );
+		virtual void set_progress( int p );
 		virtual void quit();
 };
 
@@ -19,7 +19,7 @@ void UsplashText::set_text( char *ntext )  {
 	cout << "TEXT: Message( \"" << ntext << "\" ) "<< endl;
 }
 
-void UsplashText::set_progress( float p ) {
+void UsplashText::set_progress( int p ) {
 	cout << "TEXT: Progress: " << p << endl;
 }
 

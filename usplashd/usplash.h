@@ -10,7 +10,7 @@ class Usplash {
 		virtual void init();
 		virtual void quit();
 		virtual void set_text( char * );
-		virtual void set_progress( float );
+		virtual void set_progress( int );
 
 
 		void start();

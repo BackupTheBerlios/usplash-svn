@@ -3,11 +3,18 @@
 
 #define MSG_EXIT 0
 #define MSG_TEXT 1
+#define MSG_PROGRESS 2
 
 
 struct Message {
 	short size;
 	short cmd;
+};
+
+struct MsgProgress {
+	short size;
+	short cmd;
+	int progress;
 };
 
 
