@@ -1,0 +1,3 @@
+SubDir TOP shared ;
+
+Library utils : utils.cpp ;

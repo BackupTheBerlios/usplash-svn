@@ -1,0 +1,9 @@
+SubDir TOP usquirt ;
+
+HDRS = $(TOP)/shared/ ;
+LINK = "g++" ;
+Main usquirt : usquirt.cpp ;
+
+LinkLibraries usquirt : utils  ;
+
+SubInclude TOP shared ;

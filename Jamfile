@@ -1,0 +1,6 @@
+SubDir TOP ;
+
+SubInclude TOP shared ;
+SubInclude TOP usplashd ;
+SubInclude TOP usplat ;
+SubInclude TOP usquirt ;

@@ -1,0 +1,9 @@
+SubDir TOP usplashd ;
+
+HDRS = $(TOP)/shared/ ;
+LINK = "g++" ;
+Main usplash-text : usplash-text.cpp usplash.cpp ;
+
+LinkLibraries usplash-text : utils ;
+
+SubInclude TOP shared ;
