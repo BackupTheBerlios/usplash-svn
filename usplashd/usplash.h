@@ -11,6 +11,7 @@ class Usplash {
 		virtual void quit();
 		virtual void set_text( char * );
 		virtual void set_progress( int );
+		virtual void set_animfile( char * );
 
 
 		void start();

@@ -35,6 +35,15 @@ void send_message( Message *msg ) {
 
 void print_help() {
 	/* TODO: Print helpful use message here */
+	cout 
+		<< "Usage: usquirt command" << endl
+		<< endl
+		<< "Where command is one of the following:" << endl
+		<< "    exit: Sends an exit event to usplashd" << endl
+		<< "    text MESSAGE: Sets usplashds text to MESSAGE" << endl
+		<< "    progress N: Sets usplashds progress meter to N" << endl
+		<< "    animfile FILE: Sets usplashds animation to FILE" << endl;
+
 }
 	
 
@@ -67,6 +76,14 @@ int main( int argc , char **argv ) {
 		msg->size = sizeof( MsgProgress ) - sizeof( Message );
 		((MsgProgress*)msg)->progress = atoi( argv[2] );
 
+	} else if ( !strcmp( argv[1] , "animfile" ) ) {
+		if( argc < 3 ) {
+			print_help(); exit(1);
+		}
+		msg->cmd = MSG_ANIMFILE;
+		msg = ( Message *)realloc( msg , sizeof( Message ) +  strlen( argv[2] ) + 1 );
+		msg->size = strlen( argv[2] );
+		strcpy((char*) msg+sizeof(Message) , argv[2] );
 
 	} else {
 		print_help(); exit(1);

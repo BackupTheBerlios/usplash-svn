@@ -60,6 +60,8 @@ void Usplash::run() {
 			set_text( (char*)(msg+sizeof(Message)) );
 		} else if ( msg->cmd == MSG_PROGRESS ) {
 			set_progress( *((int*)(msg+sizeof(Message))) );
+		} else if ( msg->cmd == MSG_ANIMFILE ) {
+			set_animfile( (char*)(msg+sizeof(Message)) );
 		}
 		
 		close( con );
@@ -84,4 +86,7 @@ void Usplash::set_text( char *ntext ) {
 }
 
 void Usplash::set_progress( int p ) {
+}
+
+void Usplash::set_animfile( char * ) {
 }
