@@ -1,1 +1,2 @@
+CCFLAGS = "-O3" ;
 Main usplat : usplat.c pcx-loader.c ;

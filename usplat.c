@@ -103,7 +103,7 @@ char *get_best_filename( char *dir ) {
 }
 
 
-Image *convert( Image *in ) {
+void convert( Image *in ) {
 	struct fb_var_screeninfo *vinf = get_vscreeninfo();
 	char *data;
 	char *dst;
@@ -142,22 +142,24 @@ Image *convert( Image *in ) {
 			in->bpp = 32;
 			break;
 	}
-	return in;
 }
 
 int main( int argc , char *argv[] ) {
+	if ( argc != 2 ) {
+		printf("Usage: usplat <directory>\n");
+		exit(1);
+	}
 	int fp;
 	Image *img;
 	char *fn;
 	fn = get_best_filename( argv[1] );
 	openvt();
 	img = pcx_loader( fn );
-	img = convert( img );
+	convert( img );
 
 	fp = open_fb();
 	write( fp , img->data , img->w*img->h*(img->bpp/8) );
 	close( fp );
-
 
 	return 0;
 }

@@ -1,6 +1,8 @@
 #ifndef __pcx_loader_h
 #define __pcx_loader_h
 
+#include "image.h"
+
 typedef struct {
 	char signature;
 	char version;
@@ -20,10 +22,6 @@ typedef struct {
 	char unused[58];
 } PCX_Header;
 
-typedef struct {
-	int w,h,bpp;
-	char *data;
-} Image;
 
 typedef struct {
 	int w,h,bpp;
