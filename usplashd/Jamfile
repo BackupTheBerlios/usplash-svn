@@ -3,6 +3,8 @@ SubDir TOP usplashd ;
 HDRS = $(TOP)/shared/ ;
 LINK = "g++" ;
 C++FLAGS = "-g" ;
-Main usplash-text : usplash-text.cpp usplash.cpp ;
+Main usplash-debug : usplash-debug.cpp usplash.cpp ;
 
-LinkLibraries usplash-text : utils ;
+LinkLibraries usplash-debug : utils ;
+
+SubInclude TOP shared ;

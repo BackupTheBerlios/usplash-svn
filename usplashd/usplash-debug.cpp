@@ -8,7 +8,7 @@
 using namespace std;
 
 
-class UsplashText : public Usplash {
+class UsplashDebug : public Usplash {
 	public:
 		virtual void set_text( char *);
 		virtual void set_progress( int p );
@@ -16,19 +16,19 @@ class UsplashText : public Usplash {
 		virtual void quit();
 };
 
-void UsplashText::set_text( char *ntext )  {
+void UsplashDebug::set_text( char *ntext )  {
 	cout << "TEXT: Message: " << ntext <<  endl;
 }
 
-void UsplashText::set_progress( int p ) {
+void UsplashDebug::set_progress( int p ) {
 	cout << "TEXT: Progress: " << p << endl;
 }
 
-void UsplashText::set_animfile( char *fn ) {
+void UsplashDebug::set_animfile( char *fn ) {
 	cout << "TEXT: Animfile: " << fn << endl;
 }
 
-void UsplashText::quit()  {
+void UsplashDebug::quit()  {
 	cout << "TEXT: Quit" << endl;
 }
 
@@ -36,11 +36,11 @@ void UsplashText::quit()  {
 
 int main( int argc , char *argv ) {
 	if (!fork()) {
-		UsplashText ut;
-		ut.init();
+		UsplashDebug u;
+		u.init();
 		/* TODO: Drop privs here */
-		ut.run();
-		ut.quit();
+		u.run();
+		u.quit();
 		exit(0);
 	} else {
 		wait( NULL );
